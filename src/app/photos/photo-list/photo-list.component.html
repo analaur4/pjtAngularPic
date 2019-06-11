@@ -1,1 +1,4 @@
-<alpic-photos [photos] = "photos"></alpic-photos>
+<alpic-search (onTyping) = "filter = $event" [value] = "filter"></alpic-search>
+<alpic-photos [photos] = "photos | filterByDescription: filter"></alpic-photos>
+
+<alpic-load-button (click) = "load()" [hasMore] = "hasMore"></alpic-load-button>

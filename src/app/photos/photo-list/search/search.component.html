@@ -1,0 +1,6 @@
+<div class="text-center mt-3 mb-3"> <!-- mt: margin-top | mb: margin botton -->
+  <form>
+      <i aria-hidden="true" class="fa fa-search mr-1"></i> <!-- aria-hidden afeta apenas acessibilidade -->
+      <input class="rounded" type="search" placeholder="search..." autofocus (keyup)="debounce.next($event.target.value)" [value] = "value"> <!-- keyup: a cada letra digitada pega o valor do input e joga em filter | entre parênteses é do template para o componente Event Binding-->
+  </form>
+</div>

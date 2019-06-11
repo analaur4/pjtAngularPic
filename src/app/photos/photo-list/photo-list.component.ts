@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PhotoService } from '../photo/photo.service';
 import { ActivatedRoute } from '@angular/router';
+
+import { Photo } from '../photo/photo';
+import { PhotoService } from '../photo/photo.service';
 
 @Component({
   selector: 'alpic-photo-list',
@@ -9,16 +11,31 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PhotoListComponent implements OnInit {
 
-  photos = [];
+  photos: Photo[] = [];
+  filter = '';
+  hasMore = true;
+  currentPage = 1;
+  userName = '';
 
-  constructor(private photoService: PhotoService,
-              private activatedRoute: ActivatedRoute, // rota ativada naquele momento
-  ) { }
+  constructor(private activatedRoute: ActivatedRoute, // rota ativada naquele momento
+              private photoService: PhotoService) { }
 
   ngOnInit() {
-    const userName = this.activatedRoute.snapshot.params.userName;
-    this.photoService.listFromUser(userName)
-                    .subscribe(photos => this.photos = photos);
+    this.userName = this.activatedRoute.snapshot.params.userName;
+    this.photos = this.activatedRoute.snapshot.data.photos;
   }
 
+  // ngOnDestroy() {}  é chamado toda vez que um objeto é destruído
+  
+  load() {
+    this.photoService
+      .listFromUserPaginated(this.userName, ++this.currentPage)
+      .subscribe(photos => {
+        this.filter = '';
+        this.photos = this.photos.concat(photos); // pega a lista de fotos e concatena com a outra lista de fotos
+        if (!photos.length) {
+          this.hasMore = false;
+        }
+      });
+  }
 }

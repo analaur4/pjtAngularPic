@@ -13,7 +13,7 @@ export class PhotosComponent implements OnChanges {
 
   constructor() { }
 
-  ngOnChanges(changes: SimpleChanges) { // recebe como parametro todas as possíveis mudanças de todas as in build property do componente
+  ngOnChanges(changes: SimpleChanges) { // recebe como parametro todas as possíveis mudanças de todas as inbound property do componente
     if (changes.photos) {
       this.rows = this.groupColumns(this.photos);
     }
